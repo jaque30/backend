@@ -9,7 +9,7 @@ const db = mysql.createConnection({
 host: 'localhost',
 user: 'jaque',
 password: '123',
-database: 'login'
+database: 'biblioteca'
 })
 
 db.connect((error)=> {
@@ -32,6 +32,10 @@ app.post("/login", (req, res)=>{
     console.log(username,password)
 
     db.query('SELECT password FROM user WHERE username =?', [username], (error, results)=>{
+       if (error){
+        console.log ("ocorreu um erro no banco")
+       }else{
+       
         if(results.length >  0 ){
             const passwordBD = results[0].password;
             if (passwordBD === password){
@@ -42,7 +46,7 @@ app.post("/login", (req, res)=>{
     } else {
         console.log('Usuário não cadastrado')
         
-        }
+        }}
     })
 })
 
